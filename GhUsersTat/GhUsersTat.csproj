@@ -341,6 +341,7 @@
     <Content Include="Scripts\jquery.validate\jquery.validate.unobtrusive.min.js" />
     <Content Include="Scripts\jquery\jquery-3.7.0.min.map" />
     <Content Include="Scripts\jquery\jquery-3.7.0.slim.min.map" />
+    <Content Include="Scripts\UserSearch.js" />
     <Content Include="Views\UserSearch\UserSearchResultsPartial.cshtml" />
     <Content Include="Web.example.config" />
   </ItemGroup>

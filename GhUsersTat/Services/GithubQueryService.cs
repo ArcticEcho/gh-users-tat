@@ -64,6 +64,12 @@ namespace GhUsersTat.Services
 
         public async Task<GithubUser> GetUserAsync(string username)
         {
+            if (string.IsNullOrEmpty(username))
+            {
+                _logger.LogError("Received null username");
+                return null;
+            }
+
             var cacheKey = $"GitHub User {username}";
 
             if (!_cache.TryGetValue<GithubUser>(cacheKey, out var user))
