@@ -118,6 +118,7 @@ main {
         display: grid;
         grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
         gap: 0.5rem;
+        width: 100%;
 
         .repo-item {
             background-color: hsl(275 50% 20% / 1);
