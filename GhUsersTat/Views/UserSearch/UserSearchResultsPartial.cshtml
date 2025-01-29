@@ -33,7 +33,7 @@ else
             @foreach (var repo in Model.TopRepos)
             {
                 <div class="repo-item">
-                    <div class="repo-title"><a href="@repo.Url">@repo.Name</a><span>★ @repo.StarGazers</span></div>
+                    <div class="repo-title"><a href="@repo.Url" target="_blank">@repo.Name</a><span>★ @repo.StarGazers</span></div>
                     <div>@repo.Description</div>
                 </div>
             }
