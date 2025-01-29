@@ -60,6 +60,7 @@ main form .user-search-input-continer button {
   font-weight: 600;
   background-color: #fff;
   margin-left: 1rem;
+  color: hsl(275deg, 75%, 50%);
 }
 main form #Username-error {
   display: block;
@@ -73,6 +74,16 @@ main form #Username-error {
   color: white;
   margin: auto;
   max-width: 1200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0;
+  transform: translateY(25px);
+  transition: transform ease-in-out 0.5s, opacity ease-in-out 0.5s;
+}
+#search-result-container.show {
+  transform: translateY(0);
+  opacity: 1;
 }
 #search-result-container .no-users-found {
   margin-top: 5rem;

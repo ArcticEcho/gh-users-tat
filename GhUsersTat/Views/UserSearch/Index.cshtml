@@ -36,12 +36,14 @@
                         data: $(this).serialize(),
                         success: result => {
                             $("#search-result-container").html(result);
+                            $("#search-result-container").addClass("show");
                         }
                     });
                 });
 
                 $("#Username").on("input", () => {
                     $("#search-result-container").html("");
+                    $("#search-result-container").removeClass("show");
                 })
             });
         </script>

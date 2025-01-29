@@ -14,7 +14,7 @@ else
                 @if (Model.Location != null)
                 {
                     @Model.Location
-                } 
+                }
                 else
                 {
                     @Html.Raw("<i>no location given</i>")
@@ -23,21 +23,20 @@ else
         </div>
     </div>
 
-
-    <div class="repo-grid">
-        @if (Model.TopRepos.Count == 0)
-        {
-            <i>This user doesn't have any public repositories.</i>
-        }
-        else
-        {
-            foreach (var repo in Model.TopRepos)
+    if (Model.TopRepos.Count == 0)
+    {
+        <i>This user doesn't have any public repositories.</i>
+    }
+    else
+    {
+        <div class="repo-grid">
+            @foreach (var repo in Model.TopRepos)
             {
                 <div class="repo-item">
                     <div class="repo-title"><a href="@repo.Url">@repo.Name</a><span>★ @repo.StarGazers</span></div>
                     <div>@repo.Description</div>
                 </div>
             }
-        }
-    </div>
+        </div>
+    }
 }
