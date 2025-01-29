@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Diagnostics;
 using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
@@ -8,6 +9,8 @@ using System.Threading.Tasks;
 
 using GhUsersTat.Helpers;
 using GhUsersTat.Models;
+
+using Microsoft.Extensions.Logging;
 
 namespace GhUsersTat.Services
 {
@@ -21,10 +24,12 @@ namespace GhUsersTat.Services
         private const string _githubApiBaseUrlConfig = "githubApiBaseUrl";
         private const string _githubApiKeyConfig = "githubApiKey";
         private readonly HttpClient _http;
+        private readonly ILogger<GithubQueryService> _logger;
 
-        public GithubQueryService(IHttpClientFactory httpClientFactory)
+        public GithubQueryService(IHttpClientFactory httpClientFactory, ILogger<GithubQueryService> logger)
         {
             _http = httpClientFactory.CreateClient();
+            _logger = logger;
 
             var githubApiBaseUrl = ConfigurationManager.AppSettings[_githubApiBaseUrlConfig];
             var githubApiKey = ConfigurationManager.AppSettings[_githubApiKeyConfig];
@@ -44,11 +49,19 @@ namespace GhUsersTat.Services
 
         public async Task<GithubUser> GetUser(string username)
         {
+            var sw = Stopwatch.StartNew();
+            _logger.LogInformation("Fetching github user data for user {username}", username);
+
             var response = await _http.GetAsync($"users/{username}");
 
             if (!response.IsSuccessStatusCode)
             {
-                // todo logging
+                _logger.LogError(
+                    "Failed to fetch github user data for user {username}. " +
+                    "Error code {code}.",
+                    username,
+                    response.StatusCode);
+
                 return null;
             }
 
@@ -56,7 +69,10 @@ namespace GhUsersTat.Services
 
             if (user == null)
             {
-                // todo logging
+                _logger.LogError(
+                    "Failed to parse github user data for user {username}.",
+                    username);
+
                 return null;
             }
 
@@ -66,6 +82,11 @@ namespace GhUsersTat.Services
             {
                 return null;
             }
+
+            _logger.LogInformation(
+                "Fetched github user data for user {username} in {ms}ms.",
+                username,
+                sw.ElapsedMilliseconds);
 
             return user;
         }
@@ -77,6 +98,12 @@ namespace GhUsersTat.Services
 
             if (!response.IsSuccessStatusCode)
             {
+                _logger.LogError(
+                    "Failed to fetch github repo data for given path {path}. " +
+                    "Error code {code}.",
+                    path,
+                    response.StatusCode);
+
                 return null;
             }
 
@@ -84,7 +111,10 @@ namespace GhUsersTat.Services
 
             if (repos == null)
             {
-                // todo logging
+                _logger.LogError(
+                    "Failed to parse github repo data for given path {path}.",
+                    path);
+
                 return null;
             }
 

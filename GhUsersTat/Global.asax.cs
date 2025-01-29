@@ -10,6 +10,8 @@ using GhUsersTat.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Serilog;
+
 namespace GhUsersTat
 {
     public class MvcApplication : HttpApplication
@@ -30,7 +32,7 @@ namespace GhUsersTat
             var services = new ServiceCollection();
 
             var controllerList = typeof(MvcApplication).Assembly.GetTypes()
-                .Where(type => type.BaseType == typeof(Controller) && !type.IsAbstract)
+                .Where(type => type.BaseType == typeof(Controller))
                 .ToList();
 
             foreach (var controller in controllerList)
@@ -38,6 +40,11 @@ namespace GhUsersTat
                 services.AddTransient(controller);
             }
 
+            Log.Logger = new LoggerConfiguration()
+                .WriteTo.Debug()
+                .CreateLogger();
+
+            services.AddLogging(x => x.AddSerilog(Log.Logger));
             services.AddHttpClient();
             services.AddSingleton<IGithubQueryService, GithubQueryService>();
 

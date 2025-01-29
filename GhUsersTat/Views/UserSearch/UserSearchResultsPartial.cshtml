@@ -1,12 +1,44 @@
 ﻿@model GhUsersTat.Models.GithubUser
 
-<div>@Model.Username</div>
-<div>@Model.Location</div>
-<div>@Model.AvatarUrl</div>
-
-@foreach (var repo in Model.TopRepos)
+@if (Model == null)
 {
-    <a href="@repo.Url">@repo.Name</a>
-    <div>@repo.Description</div>
-    <div>@repo.StarGazers</div>
+    <div class="no-users-found">Sorry, we couldn't find any users matching that username</div>
+}
+else
+{
+    <div class="user-meta-container">
+        <img src="@Model.AvatarUrl">
+        <div>
+            <div class="username">@Model.Username</div>
+            <div>
+                @if (Model.Location != null)
+                {
+                    @Model.Location
+                } 
+                else
+                {
+                    @Html.Raw("<i>no location given</i>")
+                }
+            </div>
+        </div>
+    </div>
+
+
+    <div class="repo-grid">
+        @if (Model.TopRepos.Count == 0)
+        {
+            <i>This user doesn't have any public repositories.</i>
+        }
+        else
+        {
+            foreach (var repo in Model.TopRepos)
+            {
+                <div class="repo-item">
+                    <div class="repo-title"><a href="@repo.Url">@repo.Name</a><span>★ @repo.StarGazers</span></div>
+                    <div>@repo.Description</div>
+                </div>
+            }
+        }
+
+    </div>
 }

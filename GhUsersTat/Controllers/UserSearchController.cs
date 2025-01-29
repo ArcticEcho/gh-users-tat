@@ -28,7 +28,7 @@ namespace GhUsersTat.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("Index", userSearch);
+                return null;
             }
 
             var user = await _githubQueryService.GetUser(userSearch.Username);

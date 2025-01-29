@@ -8,12 +8,10 @@
     @Scripts.Render("~/bundles/modernizr")
 </head>
 <body>
-    <div class="container body-content">
-        @RenderBody()
-        <footer>
-            <p>&copy; @DateTime.Now.Year - GitHub Users WebApp Technical Assesment Task, handcrafted by S Kamber</p>
-        </footer>
-    </div>
+    @RenderBody()
+    <footer>
+        <p>&copy; @DateTime.Now.Year - GitHub Users WebApp Technical Assesment Task, handcrafted by S Kamber</p>
+    </footer>
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")

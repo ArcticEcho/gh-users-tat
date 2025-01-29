@@ -1,35 +1,45 @@
 ﻿@{
     ViewBag.Title = "GitHub Users Search";
+    Html.EnableClientValidation();
 }
 
 @model GhUsersTat.Models.UserSearch
 
 <main>
-    @using (Html.BeginForm("StartSearch", "UserSearch", FormMethod.Post, new { id = "search-form"}))
+    @using (Html.BeginForm("StartSearch", "UserSearch", FormMethod.Post, new { id = "search-form" }))
     {
         @Html.LabelFor(x => x.Username)
-        @Html.TextBoxFor(x => x.Username, new { @class = "user-search-textbox" })
+        <div class="user-search-input-continer">
+            @Html.TextBoxFor(
+                x => x.Username,
+                new 
+                {
+                    @class = "user-search-textbox",
+                    placeholder = "Username",
+                    autocomplete = "off"
+                })
+            <button type="submit" class="start-user-search">Search</button>
+        </div>
         @Html.ValidationMessageFor(x => x.Username)
-        <button type="submit" class="start-user-search">Search</button>
     }
 
-    <div id="results-section">
-        <!-- Results will be loaded here -->
-    </div>
+    <div id="search-result-container"></div>
 
     @section Scripts {
-        <script>$(document).ready(function() {
-            $("#search-form").submit(function(e) {
-                e.preventDefault();
-                $.ajax({
-                    url: this.action,
-                    method: this.method,
-                    data: $(this).serialize(),
-                    success: function(result) {
-                        $("#results-section").html(result);
-                    }
+        <script>
+            $(document).ready(function() {
+                $("#search-form").submit(function(e) {
+                    e.preventDefault();
+                    $.ajax({
+                        url: this.action,
+                        method: this.method,
+                        data: $(this).serialize(),
+                        success: function(result) {
+                            $("#search-result-container").html(result);
+                        }
+                    });
                 });
             });
-        });</script>
+        </script>
     }
 </main>
