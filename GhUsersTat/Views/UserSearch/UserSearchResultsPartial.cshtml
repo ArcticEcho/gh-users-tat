@@ -1,0 +1,12 @@
+﻿@model GhUsersTat.Models.GithubUser
+
+<div>@Model.Username</div>
+<div>@Model.Location</div>
+<div>@Model.AvatarUrl</div>
+
+@foreach (var repo in Model.TopRepos)
+{
+    <a href="@repo.Url">@repo.Name</a>
+    <div>@repo.Description</div>
+    <div>@repo.StarGazers</div>
+}
