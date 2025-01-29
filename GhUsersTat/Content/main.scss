@@ -1,4 +1,6 @@
-﻿body {
+﻿$mobile-breakpoint: 600px;
+
+body {
     background-color: hsl(250 80% 15% / 1);
     min-height: 100vh;
     margin: 0;
@@ -8,8 +10,12 @@
 
 main {
     flex: 1 0 auto;
-    padding: 5rem 1rem;
+    padding: 5rem 2rem;
     width: 100%;
+
+    @media (max-width: $mobile-breakpoint) {
+        padding: 5rem 1rem;
+    }
 
     form {
         width: fit-content;
@@ -27,6 +33,18 @@ main {
         .user-search-input-continer {
             display: flex;
 
+            @media(max-width: $mobile-breakpoint) {
+                flex-direction: column;
+
+                input {
+                    width: 100% !important;
+                }
+
+                button {
+                    margin: 0.5rem 0 0 0 !important;
+                }
+            }
+
             input[type=text] {
                 width: 300px;
                 height: 40px;
@@ -40,7 +58,7 @@ main {
             button {
                 height: 40px;
                 border-radius: 20px;
-                padding: 0 5rem;
+                padding: 0 3rem;
                 font-size: 1.2rem;
                 line-height: 0;
                 font-weight: 600;
@@ -61,8 +79,8 @@ main {
 
 #search-result-container {
     color: white;
-    width: fit-content;
     margin: auto;
+    max-width: 1200px;
 
     .no-users-found {
         margin-top: 5rem;
@@ -85,19 +103,24 @@ main {
 
     .repo-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 1rem;
-        margin: auto;
-        width: fit-content;
+        grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+        gap: 0.5rem;
+
+        .repo-item {
+            background-color: hsl(275 50% 20% / 1);
+            border-radius: 20px;
+            padding: 10px 15px;
+        }
 
         .repo-title {
             display: flex;
             justify-content: space-between;
+            margin-bottom: 0.5rem;
 
             a {
                 font-weight: 700;
                 text-decoration: none;
-                color: hsl(275 100% 80% / 1);
+                color: hsl(275 100% 85% / 1);
             }
         }
     }

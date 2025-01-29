@@ -16,7 +16,7 @@
                 {
                     @class = "user-search-textbox",
                     placeholder = "Username",
-                    autocomplete = "off"
+                    autocomplete = "off",
                 })
             <button type="submit" class="start-user-search">Search</button>
         </div>
@@ -34,11 +34,15 @@
                         url: this.action,
                         method: this.method,
                         data: $(this).serialize(),
-                        success: function(result) {
+                        success: result => {
                             $("#search-result-container").html(result);
                         }
                     });
                 });
+
+                $("#Username").on("input", () => {
+                    $("#search-result-container").html("");
+                })
             });
         </script>
     }

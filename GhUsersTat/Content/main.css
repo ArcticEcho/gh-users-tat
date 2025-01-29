@@ -8,8 +8,13 @@
 
 main {
   flex: 1 0 auto;
-  padding: 5rem 1rem;
+  padding: 5rem 2rem;
   width: 100%;
+}
+@media (max-width: 600px) {
+  main {
+    padding: 5rem 1rem;
+  }
 }
 main form {
   width: fit-content;
@@ -26,6 +31,17 @@ main form label {
 main form .user-search-input-continer {
   display: flex;
 }
+@media (max-width: 600px) {
+  main form .user-search-input-continer {
+    flex-direction: column;
+  }
+  main form .user-search-input-continer input {
+    width: 100% !important;
+  }
+  main form .user-search-input-continer button {
+    margin: 0.5rem 0 0 0 !important;
+  }
+}
 main form .user-search-input-continer input[type=text] {
   width: 300px;
   height: 40px;
@@ -38,7 +54,7 @@ main form .user-search-input-continer input[type=text] {
 main form .user-search-input-continer button {
   height: 40px;
   border-radius: 20px;
-  padding: 0 5rem;
+  padding: 0 3rem;
   font-size: 1.2rem;
   line-height: 0;
   font-weight: 600;
@@ -55,8 +71,8 @@ main form #Username-error {
 
 #search-result-container {
   color: white;
-  width: fit-content;
   margin: auto;
+  max-width: 1200px;
 }
 #search-result-container .no-users-found {
   margin-top: 5rem;
@@ -75,19 +91,23 @@ main form #Username-error {
 }
 #search-result-container .repo-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 1rem;
-  margin: auto;
-  width: fit-content;
+  grid-template-columns: repeat(auto-fill, minmax(275px, 1fr));
+  gap: 0.5rem;
+}
+#search-result-container .repo-grid .repo-item {
+  background-color: hsl(275deg, 50%, 20%);
+  border-radius: 20px;
+  padding: 10px 15px;
 }
 #search-result-container .repo-grid .repo-title {
   display: flex;
   justify-content: space-between;
+  margin-bottom: 0.5rem;
 }
 #search-result-container .repo-grid .repo-title a {
   font-weight: 700;
   text-decoration: none;
-  color: hsl(275deg, 100%, 80%);
+  color: hsl(275deg, 100%, 85%);
 }
 
 footer {
