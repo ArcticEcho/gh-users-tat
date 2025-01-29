@@ -10,26 +10,34 @@ using System.Threading.Tasks;
 using GhUsersTat.Helpers;
 using GhUsersTat.Models;
 
+using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 
 namespace GhUsersTat.Services
 {
     public interface IGithubQueryService
     {
-        Task<GithubUser> GetUser(string username);
+        Task<GithubUser> GetUserAsync(string username);
     }
 
     public class GithubQueryService : IGithubQueryService
     {
         private const string _githubApiBaseUrlConfig = "githubApiBaseUrl";
         private const string _githubApiKeyConfig = "githubApiKey";
+        private readonly TimeSpan _userCacheLifetime = TimeSpan.FromHours(1);
+        private readonly int _maxReposToReturn;
         private readonly HttpClient _http;
         private readonly ILogger<GithubQueryService> _logger;
+        private readonly IMemoryCache _cache;
 
-        public GithubQueryService(IHttpClientFactory httpClientFactory, ILogger<GithubQueryService> logger)
+        public GithubQueryService(
+            HttpClient httpClient,
+            ILogger<GithubQueryService> logger,
+            IMemoryCache cache)
         {
-            _http = httpClientFactory.CreateClient();
+            _http = httpClient;
             _logger = logger;
+            _cache = cache;
 
             var githubApiBaseUrl = ConfigurationManager.AppSettings[_githubApiBaseUrlConfig];
             var githubApiKey = ConfigurationManager.AppSettings[_githubApiKeyConfig];
@@ -42,12 +50,42 @@ namespace GhUsersTat.Services
                     $"and '{_githubApiKeyConfig}' are set.");
             }
 
+            var maxRepos = ConfigurationManager.AppSettings["maxUserReposToReturn"];
+
+            if (!int.TryParse(maxRepos, out _maxReposToReturn))
+            {
+                _maxReposToReturn = 5;
+            }
+
             _http.BaseAddress = new Uri(githubApiBaseUrl);
             _http.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", githubApiKey);
             _http.DefaultRequestHeaders.Add("User-Agent", "Github-Users-Tat-App");
         }
 
-        public async Task<GithubUser> GetUser(string username)
+        public async Task<GithubUser> GetUserAsync(string username)
+        {
+            var cacheKey = $"GitHub User {username}";
+
+            if (!_cache.TryGetValue<GithubUser>(cacheKey, out var user))
+            {
+                user = await FetchUserAsync(username);
+
+                if (user == null)
+                {
+                    return null;
+                }
+
+                _cache.Set(cacheKey, user, _userCacheLifetime);
+            }
+            else
+            {
+                _logger.LogInformation("Returning cached github user data for user {username}", username);
+            }
+
+            return user;
+        }
+
+        private async Task<GithubUser> FetchUserAsync(string username)
         {
             var sw = Stopwatch.StartNew();
             _logger.LogInformation("Fetching github user data for user {username}", username);
@@ -76,7 +114,7 @@ namespace GhUsersTat.Services
                 return null;
             }
 
-            user.TopRepos = await GetTopUserRepos(user.ReposUrl);
+            user.TopRepos = await FetchTopUserReposAsync(user.ReposUrl);
 
             if (user.TopRepos == null)
             {
@@ -91,7 +129,7 @@ namespace GhUsersTat.Services
             return user;
         }
 
-        private async Task<List<GithubRepo>> GetTopUserRepos(string reposUrl)
+        private async Task<List<GithubRepo>> FetchTopUserReposAsync(string reposUrl)
         {
             var path = new Uri(reposUrl).AbsolutePath;
             var response = await _http.GetAsync(path);
@@ -120,7 +158,7 @@ namespace GhUsersTat.Services
 
             return repos
                 .OrderByDescending(x => x.StarGazers)
-                .Take(5)
+                .Take(_maxReposToReturn)
                 .ToList();
         }
     }

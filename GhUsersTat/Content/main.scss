@@ -1,7 +1,7 @@
 ﻿$mobile-breakpoint: 600px;
 
 body {
-    background-color: hsl(250 80% 15% / 1);
+    background-color: hsl(275 80% 15% / 1);
     min-height: 100vh;
     margin: 0;
     display: flex;
@@ -14,7 +14,7 @@ main {
     width: 100%;
 
     @media (max-width: $mobile-breakpoint) {
-        padding: 5rem 1rem;
+        padding: 3rem 1rem;
     }
 
     form {
@@ -64,7 +64,10 @@ main {
                 font-weight: 600;
                 background-color: #fff;
                 margin-left: 1rem;
-                color: hsl(275 75% 50% / 1);
+                color: white;
+                background-color: hsl(275 75% 55% / 1);
+                border: none;
+                outline: none;
             }
         }
 
@@ -111,6 +114,7 @@ main {
 
         .username {
             font-weight: 600;
+            font-size: 1.2rem;
         }
     }
 
@@ -151,5 +155,6 @@ footer {
     p {
         text-align: end;
         font-size: 12px;
+        margin: 16px;
     }
 }

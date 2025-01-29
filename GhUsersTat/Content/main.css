@@ -1,5 +1,5 @@
 ﻿body {
-  background-color: hsl(250deg, 80%, 15%);
+  background-color: hsl(275deg, 80%, 15%);
   min-height: 100vh;
   margin: 0;
   display: flex;
@@ -13,7 +13,7 @@ main {
 }
 @media (max-width: 600px) {
   main {
-    padding: 5rem 1rem;
+    padding: 3rem 1rem;
   }
 }
 main form {
@@ -60,7 +60,10 @@ main form .user-search-input-continer button {
   font-weight: 600;
   background-color: #fff;
   margin-left: 1rem;
-  color: hsl(275deg, 75%, 50%);
+  color: white;
+  background-color: hsl(275deg, 75%, 55%);
+  border: none;
+  outline: none;
 }
 main form #Username-error {
   display: block;
@@ -100,6 +103,7 @@ main form #Username-error {
 }
 #search-result-container .user-meta-container .username {
   font-weight: 600;
+  font-size: 1.2rem;
 }
 #search-result-container .repo-grid {
   display: grid;
@@ -134,4 +138,5 @@ footer {
 footer p {
   text-align: end;
   font-size: 12px;
+  margin: 16px;
 }

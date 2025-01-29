@@ -10,6 +10,9 @@ using GhUsersTat.Services;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
+using Polly;
+using Polly.Extensions.Http;
+
 using Serilog;
 
 namespace GhUsersTat
@@ -24,7 +27,8 @@ namespace GhUsersTat
             BundleConfig.RegisterBundles(BundleTable.Bundles);
 
             var serviceProvider = ConfigureServices();
-            DependencyResolver.SetResolver(new ServiceCollectionDependencyResolver(serviceProvider));
+            var resolver = new ServiceCollectionDependencyResolver(serviceProvider);
+            DependencyResolver.SetResolver(resolver);
         }
 
         private IServiceProvider ConfigureServices()
@@ -45,8 +49,14 @@ namespace GhUsersTat
                 .CreateLogger();
 
             services.AddLogging(x => x.AddSerilog(Log.Logger));
-            services.AddHttpClient();
             services.AddSingleton<IGithubQueryService, GithubQueryService>();
+            services.AddMemoryCache();
+
+            services
+                .AddHttpClient<IGithubQueryService, GithubQueryService>()
+                .AddPolicyHandler(HttpPolicyExtensions
+                    .HandleTransientHttpError()
+                    .WaitAndRetryAsync(3, attempt => TimeSpan.FromSeconds(Math.Pow(3, attempt - 1))));
 
             return services.BuildServiceProvider();
         }

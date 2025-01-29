@@ -31,7 +31,7 @@ namespace GhUsersTat.Controllers
                 return null;
             }
 
-            var user = await _githubQueryService.GetUser(userSearch.Username);
+            var user = await _githubQueryService.GetUserAsync(userSearch.Username);
 
             return PartialView("UserSearchResultsPartial", user);
         }
