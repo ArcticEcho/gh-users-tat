@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -28,7 +29,7 @@ namespace GhUsersTat.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return null;
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             var user = await _githubQueryService.GetUserAsync(userSearch.Username);

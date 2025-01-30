@@ -19,6 +19,9 @@ main {
 main form {
   width: fit-content;
   margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 main form label {
   color: white;
@@ -34,12 +37,14 @@ main form .user-search-input-continer {
 @media (max-width: 600px) {
   main form .user-search-input-continer {
     flex-direction: column;
+    width: 100%;
   }
   main form .user-search-input-continer input {
     width: 100% !important;
   }
   main form .user-search-input-continer button {
     margin: 0.5rem 0 0 0 !important;
+    width: 100% !important;
   }
 }
 main form .user-search-input-continer input[type=text] {
