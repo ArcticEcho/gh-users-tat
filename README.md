@@ -1,6 +1,6 @@
 # gh-users-tat
 
-A simple ASP.NET MVC WebApp that searches for a user on GitHub and results some basic info.
+A simple ASP.NET MVC WebApp that searches for a user on GitHub and returns some basic info.
 
 # Quick Start - Visual Studio 2022
 
