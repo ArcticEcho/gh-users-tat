@@ -2,6 +2,8 @@
 
 A simple ASP.NET MVC WebApp that searches for a user on GitHub and returns some basic info.
 
+This project uses .NET Framework 4.8/MVC 5, but introduces the modern .NET Core dependency injection pattern.
+
 # Quick Start - Visual Studio 2022
 
 To run the project locally after cloning the repo:
