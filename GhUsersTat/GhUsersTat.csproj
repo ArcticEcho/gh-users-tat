@@ -402,8 +402,8 @@
   </Target>
     <PropertyGroup>
         <PreBuildEvent>
-            if not exist "$(ProjectDir)\bin\roslyn" mkdir "$(ProjectDir)\bin\roslyn"
-            if exist "$(ProjectDir)\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.*\tools\RoslynLatest" robocopy "$(ProjectDir)\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.*\tools\RoslynLatest" "$(ProjectDir)\bin\roslyn" /e /nfl /ndl /njh /nc /ns
+            if not exist "$(ProjectDir)bin\roslyn" mkdir "$(ProjectDir)bin\roslyn"
+            robocopy "$(ProjectDir)packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest" "$(ProjectDir)bin\roslyn"
         </PreBuildEvent>
     </PropertyGroup>
 </Project>
