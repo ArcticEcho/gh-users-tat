@@ -43,8 +43,14 @@ main form .user-search-input-continer {
     width: 100% !important;
   }
   main form .user-search-input-continer button {
-    margin: 0.5rem 0 0 0 !important;
+    margin: 0 !important;
     width: 100% !important;
+  }
+  main form .user-search-input-continer .user-search-submit-container {
+    margin-top: 0.5rem;
+  }
+  main form .user-search-input-continer .loading-spinner {
+    left: calc(50% - 12px) !important;
   }
 }
 main form .user-search-input-continer input[type=text] {

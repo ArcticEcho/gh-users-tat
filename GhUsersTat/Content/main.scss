@@ -45,8 +45,16 @@ main {
                 }
 
                 button {
-                    margin: 0.5rem 0 0 0 !important;
+                    margin: 0 !important;
                     width: 100% !important;
+                }
+
+                .user-search-submit-container {
+                    margin-top: 0.5rem;
+                }
+
+                .loading-spinner {
+                    left: calc(50% - 12px) !important;
                 }
             }
 
