@@ -56,12 +56,10 @@ main form .user-search-input-continer .user-search-submit-container {
 }
 main form .user-search-input-continer .user-search-submit-container .loading-spinner {
   position: absolute;
-  left: calc(50% - 8px);
-  top: 5px;
-  width: 30px;
-  height: 30px;
-  border-width: 4px;
-  display: none;
+  left: calc(50% - 5px);
+  top: 7px;
+  width: 26px;
+  height: 26px;
 }
 main form .user-search-input-continer .user-search-submit-container button {
   height: 40px;
@@ -156,12 +154,13 @@ footer p {
 .loading-spinner {
   width: 48px;
   height: 48px;
-  border: 5px solid #FFF;
+  border: 4px solid #FFF;
   border-bottom-color: transparent;
   border-radius: 50%;
   display: inline-block;
   box-sizing: border-box;
   animation: spin360 1s linear infinite;
+  display: none;
 }
 
 @keyframes spin360 {
