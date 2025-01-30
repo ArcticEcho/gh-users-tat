@@ -400,7 +400,7 @@
         </PropertyGroup>
         <Error Condition="!Exists('packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props')" Text="$([System.String]::Format('$(ErrorText)', 'packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\build\net46\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.props'))" />
     </Target>
-    <Target Name="CopyRoslynCompilerFiles" AfterTargets="RestorePackages">
+    <Target Name="CopyRoslynCompilerFiles" AfterTargets="Restore">
         <Exec Command="if not exist &quot;$(ProjectDir)bin\roslyn&quot; mkdir &quot;$(ProjectDir)bin\roslyn&quot;" />
         <Exec Command="robocopy &quot;$(ProjectDir)packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.2.0.1\tools\RoslynLatest&quot; &quot;$(ProjectDir)bin\roslyn&quot;" IgnoreExitCode="true" />
     </Target>
